@@ -59,6 +59,6 @@ RUN cd /tmp && rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-lates
 #### Set root's password
     && echo "root:centos" | chpasswd \
 #### Set password for user fido
-    &&echo "fido:123456" | chpasswd
+    && echo "fido:123456" | chpasswd
 
 ENTRYPOINT ["sh", "-c", "/usr/sbin/sshd && tail -f /dev/null"]
