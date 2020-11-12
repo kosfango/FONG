@@ -1,0 +1,64 @@
+# main fidoconfig file
+name TEST Station
+sysop MyFirstName MySecondName
+location Kostroma, Russia
+address 2:5034/17
+inbound /home/fido/insecure
+protinbound /home/fido/inbound
+outbound /home/fido/outbound
+tempinbound /home/fido/tmp/in
+tempoutbound /home/fido/tmp/out
+logfiledir /home/fido/log
+dupehistorydir /home/fido/msg/dupe
+nodelistdir /home/fido/etc
+msgbasedir /home/fido/msg
+echotosslog /home/fido/log/toss.log
+importlog /home/fido/log/import.log
+
+linkwithimportlog kill
+separatebundles yes
+disablepid yes
+disabletid yes
+hptperlfile /home/fido/lib/filter.pl
+pack zip zip -9 -j -q $a $f
+unpack "unzip -j -Loqq $a $f -d $p" 0 504b0304
+
+carbonto MyFirstName MySecondName
+carboncopy PERSONAL.MAIL
+
+robotsarea NETMAIL
+
+robot default
+killrequests yes
+reportsattr loc pvt k/s npd
+
+robot AreaFix
+fromname AreaFix robot
+robotorigin AreaFix robot
+
+robot FileFix
+fromname FileFix robot
+robotorigin FileFix robot
+FileAreaBaseDir         /home/fido/fileareas
+PassFileAreaDir         /home/fido/fileareas
+
+linkdefaults begin
+allowemptypktpwd secure
+packer zip
+areafixautocreate off
+areafixautocreatedefaults -b squish -dupecheck del -dupehistory 14
+areafixautocreatefile /home/fido/etc/areas
+echomailflavour direct
+forwardrequests off
+linkdefaults end
+
+include /home/fido/etc/links
+include /home/fido/etc/route
+
+netmailarea NETMAIL       /home/fido/msg/netmail       -b squish
+badarea     BAD           /home/fido/msg/bad           -b squish
+dupearea    DUPE          /home/fido/msg/dupe          -b squish
+localarea   PERSONAL.MAIL /home/fido/msg/personal.mail -b squish
+
+include /home/fido/etc/areas
+include /home/fido/etc/fileareas

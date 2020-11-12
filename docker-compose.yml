@@ -1,0 +1,13 @@
+version: '2'
+services:
+  node:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - "/opt/fido-gui/data:/home/fido"
+      - /opt/fido-gui/etc/binkd.conf:/usr/local/etc/binkd.conf
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    ports:
+      - "63022:22"
+    container_name: fido_node_gui
