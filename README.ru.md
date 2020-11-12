@@ -22,7 +22,7 @@ X display location: localhost:0
 - Linux
 - docker
 - docker-compose
-- Directory /opt/fido-gui will будет создано автоматически
+- Directory /opt/fido-gui будет создано автоматически
 - Вам необходимо создать пользователя fido на хост-машине!
 
 ЧТО ВНУТРИ:
