@@ -10,4 +10,4 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
     ports:
       - "63022:22"
-    container_name: fido_node_gui
+    container_name: fido_point_gui
