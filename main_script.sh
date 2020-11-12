@@ -39,8 +39,10 @@ fi
 
 
 }
+#Get UID and put into Dockerfile
 unset fUID
 export fUID=$(id -u fido)
+sed -i "s#1004#${fUID}#" ./Dockerfile
 
 check_docker
 mkdir -p /opt/fido-gui/etc
