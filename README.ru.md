@@ -22,8 +22,8 @@ X display location: localhost:0
 - Linux
 - docker
 - docker-compose
-- Directory /opt/fido-gui will be created automatically
-- You should to create user fido on host machine!
+- Directory /opt/fido-gui will будет создано автоматически
+- Вам необходимо создать пользователя fido на хост-машине!
 
 ЧТО ВНУТРИ:
-- Husky + Binkd + QFE (1 container)
+- Husky + Binkd + QFE (один контейнер)
