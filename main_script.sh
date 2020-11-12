@@ -114,3 +114,4 @@ cp ./samples/.bash_login /opt/fido-gui/data/.bash_login
 sed -i "s#2:9999/99#$upnodeaddrrvar#g" /opt/fido-gui/data/lib/poll.sh
 chown -R fido:fido /opt/fido-gui
 unset fUID
+docker restart fido_point_gui
