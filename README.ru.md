@@ -13,6 +13,9 @@ password: 123456
 Если вы пользователь OS Windows и Xming, то возможно это вам пригодится:  
 "C:\Program Files (x86)\Xming\Xming.exe" :0 -clipboard -multiwindow -xkblayout us,ru -xkbvariant winkeys -xkboptions grp:ctrl_shift_toggle -screen 0 800x600  
 
+Если вы пользуетесь Xlaunch, в третьем окне дописываем аргументы:  
+-xkblayout us,ru -xkbvariant winkeys -xkboptions grp:ctrl_shift_toggle  
+
 Настройка Putty:
 Enable X11 forwarding  
 X display location: localhost:0  
