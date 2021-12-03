@@ -28,4 +28,4 @@ REQUIREMENTS:
 - You should to create user fido on host machine!
 
 INCLUDE:
-- Husky + Binkd + QFE (1 container)
+- Husky + Binkd + QFE + Golded (1 container)

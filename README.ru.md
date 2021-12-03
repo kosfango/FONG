@@ -29,4 +29,4 @@ X display location: localhost:0
 - Вам необходимо создать пользователя fido на хост-машине!
 
 ЧТО ВНУТРИ:
-- Husky + Binkd + QFE (один контейнер)
+- Husky + Binkd + QFE + Golded (один контейнер)
