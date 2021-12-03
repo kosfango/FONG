@@ -9,6 +9,8 @@ ENV QTDIR="/usr/lib64/qt-3.3${QTDIR}"
 ENV QTINC="/usr/lib64/qt-3.3/include${QTINC}"
 ENV QTLIB="/usr/lib64/qt-3.3/lib${QTLIB}"
 
+COPY ./samples/golded/mygolded.h /root/devel/mygolded.h
+
 RUN cd /tmp && rpm --import http://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
     && rpm --import http://rpms.famillecollet.com/RPM-GPG-KEY-remi \
     && rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
@@ -17,9 +19,8 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
     && rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
     && rpm -Uvh https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm \
     && yum update --exclude=kernel* --exclude=centos* -y && yum upgrade --exclude=kernel* --exclude=centos* -y \
-    && yum groupinstall "Development Tools" -y \
-    && yum install deltarpm perl-ExtUtils-Embed.noarch qt3-devel.x86_64 qt3.x86_64 aspell-ru.x86_64 aspell-devel.x86_64 which -y \
-    && yum -y groupinstall "X Window System" "Fonts" \
+    && yum groupinstall "Development Tools" "X Window System" "Fonts" -y \
+    && yum install deltarpm perl-ExtUtils-Embed.noarch qt3-devel.x86_64 qt3.x86_64 aspell-ru.x86_64 aspell-devel.x86_64 which ncurses-devel openssh-clients openssh-server xorg-x11-apps xterm screen -y \
     && useradd -ms /bin/bash --uid=${fUID} fido \
     && ln -s /home/fido /fido \
     && mkdir /var/run/binkd && chown fido:fido /var/run/binkd && chown -R fido:fido /home/fido \
@@ -34,9 +35,10 @@ RUN mkdir -p /root/devel/husky \
     && git clone https://github.com/huskyproject/htick.git \
     && git clone https://github.com/huskyproject/fidoconf.git \
     && git clone https://github.com/huskyproject/areafix.git \
-    && cp huskybse/huskymak.cfg ./huskymak.cfg \
-    && sed -i 's/PERL=0/PERL=1/g' ./huskymak.cfg \
-    && cd  ./huskylib && git checkout baf8805b4dfc901a1ab88c0764c0151ad960073c && gmake && gmake install && gmake install-man \
+    && cd ./huskybse && git checkout 22d109383260025883d652740699fcd0a6bf03c5 \
+    && cp ./huskymak.cfg ../huskymak.cfg \
+    && sed -i 's/PERL=0/PERL=1/g' ../huskymak.cfg \
+    && cd ../huskylib && git checkout baf8805b4dfc901a1ab88c0764c0151ad960073c && gmake && gmake install && gmake install-man \
     && cd ../smapi && git checkout 501a0d59f14f7e0c262e4b98bee0d5454638c684 && gmake && gmake install \
     && cd ../fidoconf &&  git checkout 774f3b8b7e0fe069fd9703de0ea1839ff012d413 && gmake && gmake install && gmake install-man \
     && cd ../areafix && git checkout 1f96d4bbc17a84fea69f910dab44d58aa223f226 && gmake && gmake install \
@@ -53,9 +55,13 @@ RUN sed -i "s#initCharsets(VOID)#initCharsets()#g" /usr/local/include/huskylib/r
     && sed -i "s#doneCharsets(VOID)#doneCharsets()#g" /usr/local/include/huskylib/recode.h \
     && cd /root/devel && git clone https://github.com/evs38/qfe.git \
     && cd ./qfe && ./configure && sed -i "s#--gc-sections#-gc-sections#g" /root/devel/qfe/src/src.pro \
-    && make && make install \
+    && make && make install
+RUN cd /root/devel && git clone https://github.com/golded-plus/golded-plus \
+###dbg ПУТИ НЕВЕРНЫЕ СЮДА НЕЛЬЗЯ СТАВИТЬ!!!! ПЕРЕЗАПИСЫВАЕМО
+    && cd ./golded-plus && cp /root/devel/mygolded.h ./golded3/ && /bin/bash dist-gpl.sh && /bin/bash dist-gpc.sh \
+    && cd .. && ls && unzip gpl80707.zip -d /usr/local/fido/golded ; chmod +x /usr/local/fido/golded/golded && unzip gpc80707.zip -d /usr/local/fido/golded ; chown -R fido:fido /usr/local/fido \
+    && cp /usr/local/fido/golded/gedlnx /usr/local/bin/ \
 ##### Install ssh server.
-    && yum install openssh-clients openssh-server -y \
     && ssh-keygen -f /etc/ssh/ssh_host_rsa_key \
     && ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key \
     && sed -i "s/^.*X11Forwarding.*$/X11Forwarding yes/" /etc/ssh/sshd_config \

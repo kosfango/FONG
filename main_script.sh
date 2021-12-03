@@ -58,9 +58,11 @@ mkdir -p /opt/fido-gui/data/insecure
 mkdir -p /opt/fido-gui/data/outbound
 mkdir -p /opt/fido-gui/data/msg/dupe
 mkdir -p /opt/fido-gui/data/fileareas
+mkdir -p /opt/fido-gui/data/golded
 
 cp -R ./samples/binkd/* /opt/fido-gui/etc/
 cp -R ./samples/husky/* /opt/fido-gui/data/etc
+cp -R ./samples/golded/* /opt/fido-gui/data/golded
 
 docker-compose -f ./docker-compose.yml up --build -d
 
@@ -107,6 +109,14 @@ sed -i "s#MyFirstName MySecondName#${namevar} ${surnamevar}#" /opt/fido-gui/etc/
 sed -i "s#2:9999/99@fidonet#${upnodeaddrrvar}@fidonet#" /opt/fido-gui/etc/binkd.conf
 sed -i "s/domain.com/$upnodehostvar/g" /opt/fido-gui/etc/binkd.conf
 sed -i "s/bosspassword/$uppassvar/g" /opt/fido-gui/etc/binkd.conf
+
+#Editing golded
+sed -i "s/MyFirstName MySecondName/$namevar $surnamevar/g" /opt/fido-gui/data/golded/mygolded.h
+sed -i "s#2:5034\/17#${nodeaddrrvar}#" /opt/fido-gui/data/golded/mygolded.h
+sed -i "s/Your Name/$namevar $surnamevar/g" /opt/fido-gui/data/golded/cfgs/config/golded.cfg
+sed -i "s#2:236\/77#$upnodeaddrrvar#" /opt/fido-gui/data/golded/cfgs/config/golded.cfg
+sed -i "s#2:236\/77\.1#$nodeaddrrvar#" /opt/fido-gui/data/golded/cfgs/config/golded.cfg
+sed -i "s#2:236\/77\.0#${upnodeaddrrvar}.0#" /opt/fido-gui/data/golded/cfgs/config/golded.cfg
 
 #Tossing script
 cp ./samples/toss.sh /opt/fido-gui/data/lib/toss.sh
