@@ -57,7 +57,6 @@ RUN sed -i "s#initCharsets(VOID)#initCharsets()#g" /usr/local/include/huskylib/r
     && cd ./qfe && ./configure && sed -i "s#--gc-sections#-gc-sections#g" /root/devel/qfe/src/src.pro \
     && make && make install
 RUN cd /root/devel && git clone https://github.com/golded-plus/golded-plus \
-###dbg ПУТИ НЕВЕРНЫЕ СЮДА НЕЛЬЗЯ СТАВИТЬ!!!! ПЕРЕЗАПИСЫВАЕМО
     && cd ./golded-plus && cp /root/devel/mygolded.h ./golded3/ && /bin/bash dist-gpl.sh && /bin/bash dist-gpc.sh \
     && cd .. && ls && unzip gpl80707.zip -d /usr/local/fido/golded ; chmod +x /usr/local/fido/golded/golded && unzip gpc80707.zip -d /usr/local/fido/golded ; chown -R fido:fido /usr/local/fido \
     && cp /usr/local/fido/golded/gedlnx /usr/local/bin/ \
